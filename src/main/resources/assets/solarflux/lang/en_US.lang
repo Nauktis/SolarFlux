@@ -1,1 +1,2 @@
-item.solarflux:solar.name=Solar panel
+itemGroup.solarflux=Solar Flux
+tile.solarflux:solar.name=Solar panel
