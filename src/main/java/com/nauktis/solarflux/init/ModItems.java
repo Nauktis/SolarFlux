@@ -2,6 +2,7 @@ package com.nauktis.solarflux.init;
 
 import net.minecraft.item.Item;
 
+import com.nauktis.solarflux.SolarFluxMod;
 import com.nauktis.solarflux.items.SFItem;
 import com.nauktis.solarflux.reference.Reference;
 
@@ -19,6 +20,7 @@ public class ModItems {
 	private ModItems() {}
 
 	public static void initialize() {
+		SolarFluxMod.log.info("Registering items");
 		GameRegistry.registerItem(mMirror, "mirror");
 	}
 }
