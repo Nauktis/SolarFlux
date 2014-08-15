@@ -1,2 +1,8 @@
 itemGroup.solarflux=Solar Flux
 tile.solarflux:solar.name=Solar panel
+item.solarflux:mirror.name=Mirror
+item.solarflux:solarCore1.name=Core I
+item.solarflux:solarCore2.name=Core II
+item.solarflux:solarCore3.name=Core III
+item.solarflux:solarCore4.name=Core IV
+item.solarflux:solarCore5.name=Core V
