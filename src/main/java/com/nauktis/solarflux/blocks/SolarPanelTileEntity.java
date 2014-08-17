@@ -102,6 +102,10 @@ public class SolarPanelTileEntity extends TileEntity implements IEnergyHandler {
 		return mEnergyStorage.extractEnergy(mEnergyStorage.getMaxExtract(), pSimulate);
 	}
 
+	public int getEnergyStored() {
+		return getEnergyStored(ForgeDirection.DOWN);
+	}
+
 	@Override
 	public int getEnergyStored(ForgeDirection pFrom) {
 		return mEnergyStorage.getEnergyStored();

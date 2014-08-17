@@ -37,11 +37,23 @@ public class SolarPanelBlock extends BaseModBlockWithTileEntity {
 
 	@Override
 	public boolean onBlockActivated(World pWorld, int pX, int pY, int pZ, EntityPlayer pPlayer, int pSide, float pdx, float pdy, float pdz) {
+
+		// TODO remove debug stuff
+		// Shows that tile entity is desynchronized between server and client.
+		if (pPlayer.isSneaking()) {
+			SolarPanelTileEntity tile = (SolarPanelTileEntity) pWorld.getTileEntity(pX, pY, pZ);
+			if (pWorld.isRemote) {
+				pPlayer.addChatMessage(new ChatComponentText("Remote: " + tile.getEnergyStored()));
+			} else {
+				pPlayer.addChatMessage(new ChatComponentText("NotRemote: " + tile.getEnergyStored()));
+			}
+		}
+
 		if (!pPlayer.isSneaking()) {
 			if (pWorld.getTileEntity(pX, pY, pZ) instanceof SolarPanelTileEntity) {
 				// TODO remove debug statement
 				SolarPanelTileEntity tile = (SolarPanelTileEntity) pWorld.getTileEntity(pX, pY, pZ);
-				String debugChat = "TileEntity [" + tile.hashCode() + "] - Energy: " + tile.getEnergyStored(ForgeDirection.DOWN);
+				String debugChat = "TileEntity [" + tile.hashCode() + "] - Energy: " + tile.getEnergyStored();
 				pPlayer.addChatMessage(new ChatComponentText(debugChat));
 				pPlayer.openGui(SolarFluxMod.sInstance, 0, pWorld, pX, pY, pZ);
 				return true;
