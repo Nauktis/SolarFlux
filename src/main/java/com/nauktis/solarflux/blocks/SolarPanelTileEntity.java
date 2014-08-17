@@ -6,9 +6,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
 
 import com.google.common.base.Objects;
+import com.nauktis.core.tileentity.BaseModTileEntity;
 import com.nauktis.solarflux.SolarFluxMod;
 
-public class SolarPanelTileEntity extends TileEntity implements IEnergyHandler {
+public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHandler {
 	private StatefulEnergyStorage mEnergyStorage;
 	private int mEnergyGeneration;
 
@@ -26,25 +27,27 @@ public class SolarPanelTileEntity extends TileEntity implements IEnergyHandler {
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		if (shouldGenerateEnergy()) {
-			generateEnergy();
-		}
+		generateEnergy();
 		if (shouldTransferEnergy()) {
 			transferEnergy();
 		}
 	}
 
-	protected boolean shouldGenerateEnergy() {
-		return worldObj.canBlockSeeTheSky(xCoord, yCoord + 1, zCoord);
+	public int getEnergyProduced() {
+		if (worldObj.canBlockSeeTheSky(xCoord, yCoord + 1, zCoord)) {
+			if (worldObj.isDaytime()) {
+				return mEnergyGeneration;
+			}
+		}
+		return 0;
 	}
 
 	protected void generateEnergy() {
-		if (worldObj.isDaytime()) {
-			// TODO Quantity proportional to sun level. 0 at night. Sinus
-			// function
-			// TODO use worldObj.skylightSubtracted
-			mEnergyStorage.receiveEnergy(4, false);
+		int produced = getEnergyProduced();
+		if (produced > 0) {
+			mEnergyStorage.receiveEnergy(produced, false);
 		}
+
 	}
 
 	protected boolean shouldTransferEnergy() {
@@ -65,21 +68,19 @@ public class SolarPanelTileEntity extends TileEntity implements IEnergyHandler {
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound pNBT) {
-		SolarFluxMod.log.info("Reading NBT %s", this);
-
-		super.readFromNBT(pNBT);
+	protected void loadDataFromNBT(NBTTagCompound pNBT) {
+		SolarFluxMod.log.info("SolarPanelTileEntity.loadDataFromNBT");
+		super.loadDataFromNBT(pNBT);
 		mEnergyGeneration = pNBT.getInteger("Production");
 		mEnergyStorage.readFromNBT(pNBT);
-
-		SolarFluxMod.log.info("Loaded: %s", mEnergyStorage);
+		// TODO remove debug statement
+		SolarFluxMod.log.info("Loaded: %s", this);
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound pNBT) {
-		SolarFluxMod.log.info("Writing to NBT: %s", this);
-
-		super.writeToNBT(pNBT);
+	protected void addDataToNBT(NBTTagCompound pNBT) {
+		SolarFluxMod.log.info("SolarPanelTileEntity.addDataToNBT");
+		super.addDataToNBT(pNBT);
 		pNBT.setInteger("Production", mEnergyGeneration);
 		mEnergyStorage.writeToNBT(pNBT);
 	}
@@ -106,9 +107,17 @@ public class SolarPanelTileEntity extends TileEntity implements IEnergyHandler {
 		return getEnergyStored(ForgeDirection.DOWN);
 	}
 
+	public int getPercentageEnergyStored() {
+		return 100 * getEnergyStored() / getMaxEnergyStored();
+	}
+
 	@Override
 	public int getEnergyStored(ForgeDirection pFrom) {
 		return mEnergyStorage.getEnergyStored();
+	}
+
+	public int getMaxEnergyStored() {
+		return getMaxEnergyStored(ForgeDirection.DOWN);
 	}
 
 	@Override
