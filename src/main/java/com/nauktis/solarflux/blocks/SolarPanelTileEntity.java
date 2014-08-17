@@ -13,6 +13,7 @@ public class SolarPanelTileEntity extends TileEntity implements IEnergyHandler {
 	private int mEnergyGeneration;
 
 	public SolarPanelTileEntity() {
+		// This empty constructor is used when loading a TileEntity from NBT.
 		this(0, 0);
 	}
 
