@@ -7,6 +7,7 @@ import net.minecraft.world.World;
 public abstract class BaseModBlockWithTileEntity extends BaseModBlock implements ITileEntityProvider {
 	public BaseModBlockWithTileEntity(String pModId) {
 		super(pModId);
+		this.isBlockContainer = true;
 	}
 
 	public BaseModBlockWithTileEntity(String pModId, String pName) {

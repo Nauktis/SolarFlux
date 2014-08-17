@@ -22,7 +22,7 @@ group= "com.nauktis.solarflux" // http://maven.apache.org/guides/mini/guide-nami
 archivesBaseName = "SolarFlux"
 
 minecraft {
-    version = "1.7.10-10.13.0.1199"
+    version = "1.7.10-10.13.0.1207"
 }
 
 dependencies {
