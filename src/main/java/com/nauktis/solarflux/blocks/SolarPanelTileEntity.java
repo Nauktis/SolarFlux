@@ -2,6 +2,7 @@ package com.nauktis.solarflux.blocks;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
 
@@ -11,17 +12,17 @@ import com.nauktis.solarflux.SolarFluxMod;
 
 public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHandler {
 	private StatefulEnergyStorage mEnergyStorage;
-	private int mEnergyGeneration;
+	private int mMaximumEnergyGeneration;
 
 	public SolarPanelTileEntity() {
 		// This empty constructor is used when loading a TileEntity from NBT.
-		this(0, 0);
+		this(0, 0, 0);
 	}
 
-	public SolarPanelTileEntity(int pEnergyGeneration, int pCapacity) {
-		SolarFluxMod.log.info("SolarPanelTileEntity(%d, %d)", pEnergyGeneration, pCapacity);
-		mEnergyGeneration = pEnergyGeneration;
-		mEnergyStorage = new StatefulEnergyStorage(pCapacity, 10000);
+	public SolarPanelTileEntity(int pMaximumEnergyGeneration, int pMaximumEnergyTransfer, int pCapacity) {
+		SolarFluxMod.log.info("SolarPanelTileEntity(%d, %d)", pMaximumEnergyGeneration, pCapacity);
+		mMaximumEnergyGeneration = pMaximumEnergyGeneration;
+		mEnergyStorage = new StatefulEnergyStorage(pCapacity, pMaximumEnergyTransfer);
 	}
 
 	@Override
@@ -35,9 +36,16 @@ public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHa
 
 	public int getEnergyProduced() {
 		if (worldObj.canBlockSeeTheSky(xCoord, yCoord + 1, zCoord)) {
-			if (worldObj.isDaytime()) {
-				return mEnergyGeneration;
+			float multiplicator = 1.5f;
+			float displacement = 1.2f;
+			float celestialAngleRadians = worldObj.getCelestialAngleRadians(1.0f);
+
+			if (celestialAngleRadians > Math.PI) {
+				celestialAngleRadians = (2 * 3.141592f - celestialAngleRadians);
 			}
+
+			int c = Math.min(mMaximumEnergyGeneration, Math.round(mMaximumEnergyGeneration * multiplicator * MathHelper.cos(celestialAngleRadians / displacement)));
+			return c > 0 ? c : 0;
 		}
 		return 0;
 	}
@@ -71,7 +79,7 @@ public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHa
 	protected void loadDataFromNBT(NBTTagCompound pNBT) {
 		SolarFluxMod.log.info("SolarPanelTileEntity.loadDataFromNBT");
 		super.loadDataFromNBT(pNBT);
-		mEnergyGeneration = pNBT.getInteger("Production");
+		mMaximumEnergyGeneration = pNBT.getInteger("Production");
 		mEnergyStorage.readFromNBT(pNBT);
 		// TODO remove debug statement
 		SolarFluxMod.log.info("Loaded: %s", this);
@@ -81,7 +89,7 @@ public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHa
 	protected void addDataToNBT(NBTTagCompound pNBT) {
 		SolarFluxMod.log.info("SolarPanelTileEntity.addDataToNBT");
 		super.addDataToNBT(pNBT);
-		pNBT.setInteger("Production", mEnergyGeneration);
+		pNBT.setInteger("Production", mMaximumEnergyGeneration);
 		mEnergyStorage.writeToNBT(pNBT);
 	}
 
@@ -127,6 +135,6 @@ public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHa
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("hash", hashCode()).add("MaxProduction", mEnergyGeneration).add("energyStorage", mEnergyStorage).toString();
+		return Objects.toStringHelper(this).add("hash", hashCode()).add("MaxProduction", mMaximumEnergyGeneration).add("energyStorage", mEnergyStorage).toString();
 	}
 }

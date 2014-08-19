@@ -8,12 +8,8 @@ import com.google.common.base.Preconditions;
 public class BaseModItem extends Item {
 	private final String mModId;
 
-	public BaseModItem(String pModId) {
-		mModId = Preconditions.checkNotNull(pModId).toLowerCase();
-	}
-
 	public BaseModItem(String pModId, String pName) {
-		this(pModId);
+		mModId = Preconditions.checkNotNull(pModId).toLowerCase();
 		setUnlocalizedName(Preconditions.checkNotNull(pName));
 	}
 
