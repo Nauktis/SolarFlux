@@ -17,6 +17,14 @@ public class BaseModTileEntity extends TileEntity {
 		return zCoord;
 	}
 
+	public boolean isServer() {
+		return !isClient();
+	}
+
+	public boolean isClient() {
+		return getWorldObj().isRemote;
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound pNBT) {
 		super.readFromNBT(pNBT);

@@ -8,9 +8,10 @@ import cofh.api.energy.IEnergyHandler;
 
 import com.google.common.base.Objects;
 import com.nauktis.core.tileentity.BaseModTileEntity;
-import com.nauktis.solarflux.SolarFluxMod;
+import com.nauktis.solarflux.config.ModConfiguration;
 
 public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHandler {
+	private static final int DISTRIBUTION_TICK_RATE = 5 * 20;
 	private StatefulEnergyStorage mEnergyStorage;
 	private int mMaximumEnergyGeneration;
 
@@ -20,7 +21,6 @@ public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHa
 	}
 
 	public SolarPanelTileEntity(int pMaximumEnergyGeneration, int pMaximumEnergyTransfer, int pCapacity) {
-		SolarFluxMod.log.info("SolarPanelTileEntity(%d, %d)", pMaximumEnergyGeneration, pCapacity);
 		mMaximumEnergyGeneration = pMaximumEnergyGeneration;
 		mEnergyStorage = new StatefulEnergyStorage(pCapacity, pMaximumEnergyTransfer);
 	}
@@ -28,10 +28,28 @@ public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHa
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		generateEnergy();
-		if (shouldTransferEnergy()) {
-			transferEnergy();
+		if (isServer()) {
+			generateEnergy();
+			if (shouldTransferEnergy()) {
+				transferEnergy();
+			}
+			if (shouldAutoBalanceEnergy()) {
+				tryAutoBalanceEnergyAt(x() + 1, y(), z());
+				tryAutoBalanceEnergyAt(x(), y(), z() + 1);
+			}
 		}
+	}
+
+	private void tryAutoBalanceEnergyAt(int pX, int pY, int pZ) {
+		TileEntity tile = getWorldObj().getTileEntity(pX, pY, pZ);
+		if (tile instanceof SolarPanelTileEntity) {
+			SolarPanelTileEntity neighbor = (SolarPanelTileEntity) tile;
+			mEnergyStorage.autoBalanceEnergy(neighbor.mEnergyStorage, DISTRIBUTION_TICK_RATE);
+		}
+	}
+
+	private boolean shouldAutoBalanceEnergy() {
+		return ModConfiguration.doesAutoBalanceEnergy() && getWorldObj().getTotalWorldTime() % DISTRIBUTION_TICK_RATE == 0;
 	}
 
 	public int getEnergyProduced() {
@@ -68,8 +86,7 @@ public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHa
 			if (!(tile instanceof SolarPanelTileEntity)) {
 				if (tile instanceof IEnergyHandler) {
 					IEnergyHandler receiver = (IEnergyHandler) tile;
-					int energyToTransfer = mEnergyStorage.extractEnergy(mEnergyStorage.getMaxExtract(), true);
-					mEnergyStorage.extractEnergy(receiver.receiveEnergy(direction.getOpposite(), energyToTransfer, false), false);
+					mEnergyStorage.sendMaxTo(receiver, direction.getOpposite());
 				}
 			}
 		}
@@ -77,17 +94,13 @@ public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHa
 
 	@Override
 	protected void loadDataFromNBT(NBTTagCompound pNBT) {
-		SolarFluxMod.log.info("SolarPanelTileEntity.loadDataFromNBT");
 		super.loadDataFromNBT(pNBT);
 		mMaximumEnergyGeneration = pNBT.getInteger("Production");
 		mEnergyStorage.readFromNBT(pNBT);
-		// TODO remove debug statement
-		SolarFluxMod.log.info("Loaded: %s", this);
 	}
 
 	@Override
 	protected void addDataToNBT(NBTTagCompound pNBT) {
-		SolarFluxMod.log.info("SolarPanelTileEntity.addDataToNBT");
 		super.addDataToNBT(pNBT);
 		pNBT.setInteger("Production", mMaximumEnergyGeneration);
 		mEnergyStorage.writeToNBT(pNBT);
@@ -95,10 +108,10 @@ public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHa
 
 	@Override
 	public boolean canConnectEnergy(ForgeDirection pFrom) {
-		if (pFrom != ForgeDirection.UP) {
-			return true;
+		if (pFrom == ForgeDirection.UP) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -116,7 +129,9 @@ public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHa
 	}
 
 	public int getPercentageEnergyStored() {
-		return 100 * getEnergyStored() / getMaxEnergyStored();
+		// Trick with long to avoid overflow.
+		long v = getEnergyStored();
+		return (int) (100 * v / getMaxEnergyStored());
 	}
 
 	@Override

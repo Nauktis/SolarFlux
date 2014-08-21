@@ -2,7 +2,7 @@
 {
   "modid": "SolarFlux",
   "name": "Solar Flux",
-  "description": "Example placeholder mod.",
+  "description": "Solar Panels producing Redstone Flux",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",

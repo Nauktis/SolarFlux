@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.nauktis.core.block.BaseModBlockWithTileEntity;
+import com.nauktis.solarflux.config.ModConfiguration;
 import com.nauktis.solarflux.creativetab.ModCreativeTab;
 import com.nauktis.solarflux.reference.Reference;
 
@@ -27,6 +28,27 @@ public class SolarPanelBlock extends BaseModBlockWithTileEntity {
 		setHardness(3.0F);
 		setResistance(5.0F);
 		setStepSound(soundTypeMetal);
+		if (!ModConfiguration.isSolarPanelFullBlock()) {
+			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, ModConfiguration.getSolarPanelHeight(), 1.0F);
+			setLightOpacity(255);
+			useNeighborBrightness = true;
+		}
+	}
+
+	@Override
+	public boolean renderAsNormalBlock() {
+		if (!ModConfiguration.isSolarPanelFullBlock()) {
+			return false;
+		}
+		return super.renderAsNormalBlock();
+	}
+
+	@Override
+	public boolean isOpaqueCube() {
+		if (!ModConfiguration.isSolarPanelFullBlock()) {
+			return false;
+		}
+		return super.isOpaqueCube();
 	}
 
 	public int getMaximumEnergyGeneration() {
