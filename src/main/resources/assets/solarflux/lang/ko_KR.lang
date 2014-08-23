@@ -1,4 +1,5 @@
-itemGroup.solarflux=태양 플럭스
+# author TeamMMKP(@puyo061 , editor @clayweb)
+itemGroup.solarflux=솔라 플럭스
 tile.solarflux:solar1.name=태양광 패널 I
 tile.solarflux:solar2.name=태양광 패널 II
 tile.solarflux:solar3.name=태양광 패널 III
