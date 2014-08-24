@@ -22,8 +22,12 @@ group= "com.nauktis.solarflux"
 archivesBaseName = "SolarFlux"
 
 minecraft {
-    version = "1.7.10-10.13.0.1207"
+    version = "1.7.10-10.13.0.1208"
     runDir = 'run'
+}
+
+dependencies {
+    
 }
 
 processResources {

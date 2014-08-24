@@ -22,7 +22,7 @@ public class SolarPanelBlock extends BaseModBlockWithTileEntity {
 	public SolarPanelBlock(String pName, int pMaximumEnergyGeneration, int pEnergyCapacity) {
 		super(Reference.MOD_ID, pName);
 		mMaximumEnergyGeneration = pMaximumEnergyGeneration;
-		mMaximumEnergyTransfer = mMaximumEnergyGeneration * 4;
+		mMaximumEnergyTransfer = mMaximumEnergyGeneration * 8;
 		mEnergyCapacity = pEnergyCapacity;
 		setCreativeTab(ModCreativeTab.MOD_TAB);
 		setHardness(3.0F);

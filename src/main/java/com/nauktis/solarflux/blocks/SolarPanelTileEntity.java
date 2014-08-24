@@ -73,7 +73,6 @@ public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHa
 		if (produced > 0) {
 			mEnergyStorage.receiveEnergy(produced, false);
 		}
-
 	}
 
 	protected boolean shouldTransferEnergy() {
