@@ -1,0 +1,18 @@
+# author TeamMMKP(@clayweb , editor @puyo061)
+itemGroup.solarflux=솔라 플럭스
+tile.solarflux:solar1.name=태양광 패널 I
+tile.solarflux:solar2.name=태양광 패널 II
+tile.solarflux:solar3.name=태양광 패널 III
+tile.solarflux:solar4.name=태양광 패널 IV
+tile.solarflux:solar5.name=태양광 패널 V
+tile.solarflux:solar6.name=태양광 패털 VI
+item.solarflux:mirror.name=거울
+item.solarflux:solarCore1.name=코어 I
+item.solarflux:solarCore2.name=코어 II
+item.solarflux:solarCore3.name=코어 III
+item.solarflux:solarCore4.name=코어 IV
+item.solarflux:solarCore5.name=코어 V
+item.solarflux:solarCell1.name=태양 전지 I
+item.solarflux:solarCell2.name=태양 전지 II
+item.solarflux:solarCell3.name=태양 전지 III
+item.solarflux:solarCell4.name=태양 전지 IV
