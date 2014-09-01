@@ -1,0 +1,17 @@
+﻿itemGroup.solarflux=Solar Flux
+tile.solarflux:solar1.name=Солнечная Панель I
+tile.solarflux:solar2.name=Солнечная Панель II
+tile.solarflux:solar3.name=Солнечная Панель III
+tile.solarflux:solar4.name=Солнечная Панель IV
+tile.solarflux:solar5.name=Солнечная Панель V
+tile.solarflux:solar6.name=Солнечная Панель VI
+item.solarflux:mirror.name=Зеркало
+item.solarflux:solarCore1.name=Ядро I
+item.solarflux:solarCore2.name=Ядро II
+item.solarflux:solarCore3.name=Ядро III
+item.solarflux:solarCore4.name=Ядро IV
+item.solarflux:solarCore5.name=Ядро V
+item.solarflux:solarCell1.name=Фотоэлектрическая Ячейка I
+item.solarflux:solarCell2.name=Фотоэлектрическая Ячейка II
+item.solarflux:solarCell3.name=Фотоэлектрическая Ячейка III
+item.solarflux:solarCell4.name=Фотоэлектрическая Ячейка IV
