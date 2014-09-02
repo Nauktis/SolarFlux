@@ -20,7 +20,7 @@ public class ModRecipes {
 	public static void initialize() {
 		SolarFluxMod.log.info("Registering recipes");
 		registerCommonRecipes();
-		if (ModConfiguration.useThermalExpansionRecipes() && !(Loader.isModLoaded(Reference.THERMAL_EXPANSION_MOD_ID) && registerThermalExpansion())) {
+		if (!(ModConfiguration.useThermalExpansionRecipes() && Loader.isModLoaded(Reference.THERMAL_EXPANSION_MOD_ID) && registerThermalExpansion())) {
 			registerVanilla();
 		}
 	}
