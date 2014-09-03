@@ -18,6 +18,9 @@ public abstract class BaseModBlockWithTileEntity extends BaseModBlock implements
 	public boolean onBlockEventReceived(World pWorld, int pX, int pY, int pZ, int pEventNumber, int pEventArgument) {
 		super.onBlockEventReceived(pWorld, pX, pY, pZ, pEventNumber, pEventArgument);
 		TileEntity tileentity = pWorld.getTileEntity(pX, pY, pZ);
-		return tileentity != null ? tileentity.receiveClientEvent(pEventNumber, pEventArgument) : false;
+		if (tileentity != null) {
+			return tileentity.receiveClientEvent(pEventNumber, pEventArgument);
+		}
+		return false;
 	}
 }

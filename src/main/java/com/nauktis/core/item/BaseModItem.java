@@ -23,7 +23,7 @@ public class BaseModItem extends Item {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack pP_77667_1_) {
+	public String getUnlocalizedName(ItemStack pItemStack) {
 		return getUnlocalizedName();
 	}
 
