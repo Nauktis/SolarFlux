@@ -1,0 +1,18 @@
+itemGroup.solarflux=Solar Flux
+
+tile.solarflux:solar1.name=太阳能 Tier 1
+tile.solarflux:solar2.name=太阳能 Tier 2
+tile.solarflux:solar3.name=太阳能 Tier 3
+tile.solarflux:solar4.name=太阳能 Tier 4
+tile.solarflux:solar5.name=太阳能 Tier 5
+tile.solarflux:solar6.name=太阳能 Tier 6
+item.solarflux:mirror.name=反光镜
+item.solarflux:solarCore1.name=太阳能核心 Tier 1
+item.solarflux:solarCore2.name=太阳能核心 Tier 2
+item.solarflux:solarCore3.name=太阳能核心 Tier 3
+item.solarflux:solarCore4.name=太阳能核心 Tier 4
+item.solarflux:solarCore5.name=太阳能核心 Tier 5
+item.solarflux:solarCell1.name=光电池 Tier 1
+item.solarflux:solarCell2.name=光电池 Tier 2
+item.solarflux:solarCell3.name=光电池 Tier 3
+item.solarflux:solarCell4.name=光电池 Tier 4
