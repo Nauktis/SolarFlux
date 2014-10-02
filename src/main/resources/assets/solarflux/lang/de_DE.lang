@@ -1,0 +1,17 @@
+itemGroup.solarflux=Solar Flux
+tile.solarflux:solar1.name=Solarmodul I
+tile.solarflux:solar2.name=Solarmodul II
+tile.solarflux:solar3.name=Solarmodul III
+tile.solarflux:solar4.name=Solarmodul IV
+tile.solarflux:solar5.name=Solarmodul V
+tile.solarflux:solar6.name=Solarmodul VI
+item.solarflux:mirror.name=Spiegel
+item.solarflux:solarCore1.name=Kern I
+item.solarflux:solarCore2.name=Kern II
+item.solarflux:solarCore3.name=Kern III
+item.solarflux:solarCore4.name=Kern IV
+item.solarflux:solarCore5.name=Kern V
+item.solarflux:solarCell1.name=Solarzelle I
+item.solarflux:solarCell2.name=Solarzelle II
+item.solarflux:solarCell3.name=Solarzelle III
+item.solarflux:solarCell4.name=Solarzelle IV
