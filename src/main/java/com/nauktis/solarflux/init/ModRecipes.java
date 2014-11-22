@@ -52,7 +52,7 @@ public class ModRecipes {
 		// Solar Panels
 		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.mSolar1, "mmm", "prp", "ppp", 'm', ModItems.mMirror, 'p', "plankWood", 'r', "dustRedstone"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.mSolar2, "sss", "scs", "sss", 's', ModBlocks.mSolar1, 'c', ModItems.mSolarCore1));
-		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.mSolar3, "ppp", "scs", "sbs", 'p', ModItems.mSolarCell1, 's', ModBlocks.mSolar2, 'c', ModItems.mSolarCore2, 'b', "blockCopper"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.mSolar3, "ppp", "scs", "sbs", 'p', ModItems.mSolarCell1, 's', ModBlocks.mSolar2, 'c', ModItems.mSolarCore2, 'b', blockCopper));
 		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.mSolar4, "ppp", "scs", "sbs", 'p', ModItems.mSolarCell2, 's', ModBlocks.mSolar3, 'c', ModItems.mSolarCore3, 'b', "blockIron"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.mSolar5, "ppp", "scs", "sbs", 'p', ModItems.mSolarCell3, 's', ModBlocks.mSolar4, 'c', ModItems.mSolarCore4, 'b', "blockGold"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(ModBlocks.mSolar6, "ppp", "scs", "sbs", 'p', ModItems.mSolarCell4, 's', ModBlocks.mSolar5, 'c', ModItems.mSolarCore5, 'b', "blockDiamond"));
