@@ -1,0 +1,17 @@
+itemGroup.solarflux=Solar Flux
+tile.solarflux:solar1.name=Bateria słoneczna I
+tile.solarflux:solar2.name=Bateria słoneczna II
+tile.solarflux:solar3.name=Bateria słoneczna III
+tile.solarflux:solar4.name=Bateria słoneczna IV
+tile.solarflux:solar5.name=Bateria słoneczna V
+tile.solarflux:solar6.name=Bateria słoneczna VI
+item.solarflux:mirror.name=LLustro
+item.solarflux:solarCore1.name=Rdzeń I
+item.solarflux:solarCore2.name=Rdzeń II
+item.solarflux:solarCore3.name=Rdzeń III
+item.solarflux:solarCore4.name=Rdzeń IV
+item.solarflux:solarCore5.name=Rdzeń V
+item.solarflux:solarCell1.name=Ogniwo fotowoltaiczne I
+item.solarflux:solarCell2.name=Ogniwo fotowoltaiczne II
+item.solarflux:solarCell3.name=Ogniwo fotowoltaiczne III
+item.solarflux:solarCell4.name=Ogniwo fotowoltaiczne IV
