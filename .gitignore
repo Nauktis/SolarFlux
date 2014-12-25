@@ -1,3 +1,4 @@
+# Mac
 .DS_Store
 
 # Gradle
@@ -9,6 +10,7 @@ gradlew.bat
 # Build
 /bin/
 /build/
+/run/
 
 # Eclipse
 eclipse
@@ -16,3 +18,9 @@ eclipse
 .project
 .settings/
 .checkstyle
+
+# IntelliJ
+.idea/
+*.ipr
+*.iml
+*.iws
