@@ -3,6 +3,7 @@
 # Gradle
 gradle
 gradlew
+gradlew.bat
 .gradle
 
 # Build
