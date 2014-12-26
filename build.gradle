@@ -15,19 +15,43 @@ buildscript {
     }
 }
 
+repositories {
+    maven {
+        name 'CB Maven FS'
+        url "http://chickenbones.net/maven/"
+    }
+    maven {
+        name 'ForgeFS'
+        url 'http://files.minecraftforge.net/maven'
+    }
+}
+
 apply plugin: 'forge'
 
-version = "1.7.10-0.4d"
-group= "com.nauktis.solarflux"
+// Define properties file
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    // Load config. It shall from now be referenced as simply config or project.config
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+version = "${config.minecraft_version}-${config.mod_version}"
+group = "com.nauktis.solarflux"
 archivesBaseName = "SolarFlux"
 
 minecraft {
-    version = "1.7.10-10.13.2.1230"
+    version = config.minecraft_version + "-" + config.forge_version
     runDir = 'run'
 }
 
 dependencies {
-
+    compile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.codechickenlib_version}:dev"
+    compile "codechicken:CodeChickenCore:${config.minecraft_version}-${config.codechickencore_version}:dev"
+    compile "codechicken:ForgeMultipart:${config.minecraft_version}-${config.forgemultipart_version}:dev"
+    compile "codechicken:NotEnoughItems:${config.minecraft_version}-${config.notenoughitems_version}:dev"
 }
 
 processResources {
@@ -36,7 +60,7 @@ processResources {
 
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
 
     from(sourceSets.main.resources.srcDirs) {
