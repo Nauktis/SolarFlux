@@ -45,6 +45,9 @@ archivesBaseName = "SolarFlux"
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
     runDir = 'run'
+
+    // Replacing stuff in the source
+    replace '@VERSION@', project.version
 }
 
 dependencies {
