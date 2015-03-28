@@ -1,6 +1,7 @@
 package com.nauktis.solarflux.blocks;
 
 import cofh.api.energy.IEnergyHandler;
+import cofh.api.energy.IEnergyReceiver;
 import cofh.api.energy.IEnergyStorage;
 import com.google.common.base.Objects;
 import net.minecraft.nbt.NBTTagCompound;
@@ -78,10 +79,10 @@ public class StatefulEnergyStorage implements IEnergyStorage {
     }
 
     /**
-     * Sends the maximum amount of energy possible to the {@link IEnergyHandler}
+     * Sends the maximum amount of energy possible to the {@link IEnergyReceiver}
      */
-    public int sendMaxTo(IEnergyHandler pEnergyHandler, ForgeDirection pFrom) {
-        return extractEnergy(pEnergyHandler.receiveEnergy(pFrom, getMaxExtract(), false), false);
+    public int sendMaxTo(IEnergyReceiver pEnergyReceiver, ForgeDirection pFrom) {
+        return extractEnergy(pEnergyReceiver.receiveEnergy(pFrom, getMaxExtract(), false), false);
     }
 
     /**

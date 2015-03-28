@@ -1,6 +1,7 @@
 package com.nauktis.solarflux.blocks;
 
 import cofh.api.energy.IEnergyHandler;
+import cofh.api.energy.IEnergyReceiver;
 import com.google.common.base.Objects;
 import com.nauktis.core.tileentity.BaseModTileEntity;
 import com.nauktis.solarflux.config.ModConfiguration;
@@ -100,8 +101,8 @@ public class SolarPanelTileEntity extends BaseModTileEntity implements IEnergyHa
                     yCoord + direction.offsetY,
                     zCoord + direction.offsetZ);
             if (!(tile instanceof SolarPanelTileEntity)) {
-                if (tile instanceof IEnergyHandler) {
-                    IEnergyHandler receiver = (IEnergyHandler) tile;
+                if (tile instanceof IEnergyReceiver) {
+                    IEnergyReceiver receiver = (IEnergyReceiver) tile;
                     mEnergyStorage.sendMaxTo(receiver, direction.getOpposite());
                 }
             }
