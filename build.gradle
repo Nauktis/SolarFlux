@@ -27,6 +27,8 @@ repositories {
 }
 
 apply plugin: 'forge'
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 // Define properties file
 ext.configFile = file "build.properties"
@@ -70,3 +72,5 @@ processResources {
         exclude 'mcmod.info'
     }
 }
+
+idea { module { inheritOutputDirs = true } }
