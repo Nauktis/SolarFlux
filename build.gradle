@@ -1,18 +1,10 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
+        maven { url = "http://files.minecraftforge.net/maven" }
+        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-    }
+    dependencies { classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT' }
 }
 
 repositories {
@@ -57,6 +49,7 @@ dependencies {
     compile "codechicken:CodeChickenCore:${config.minecraft_version}-${config.codechickencore_version}:dev"
     compile "codechicken:ForgeMultipart:${config.minecraft_version}-${config.forgemultipart_version}:dev"
     compile "codechicken:NotEnoughItems:${config.minecraft_version}-${config.notenoughitems_version}:dev"
+    compile "com.mod-buildcraft:buildcraft:${config.buildcraft_version}:api"
 }
 
 processResources {
