@@ -11,6 +11,7 @@ gradlew.bat
 /bin/
 /build/
 /run/
+/out/
 
 # Eclipse
 eclipse
