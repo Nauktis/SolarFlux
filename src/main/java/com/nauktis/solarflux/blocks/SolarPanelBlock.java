@@ -5,6 +5,7 @@ import com.nauktis.core.utility.Utils;
 import com.nauktis.solarflux.SolarFluxMod;
 import com.nauktis.solarflux.config.ModConfiguration;
 import com.nauktis.solarflux.creativetab.ModCreativeTab;
+import com.nauktis.solarflux.reference.NBTConstants;
 import com.nauktis.solarflux.reference.Reference;
 import com.nauktis.solarflux.utility.Lang;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -19,16 +20,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class SolarPanelBlock extends BaseModBlockWithTileEntity {
-    protected final int mMaximumEnergyGeneration;
-    protected final int mMaximumEnergyTransfer;
-    protected final int mEnergyCapacity;
+    private final int mTierIndex;
     private IIcon mBlockSideIcon;
 
-    public SolarPanelBlock(String pName, int pMaximumEnergyGeneration, int pEnergyCapacity) {
+    public SolarPanelBlock(String pName, int pTierIndex) {
         super(Reference.MOD_ID, pName);
-        mMaximumEnergyGeneration = pMaximumEnergyGeneration;
-        mMaximumEnergyTransfer = mMaximumEnergyGeneration * 8;
-        mEnergyCapacity = pEnergyCapacity;
+        mTierIndex = pTierIndex;
         setCreativeTab(ModCreativeTab.MOD_TAB);
         setHardness(3.0F);
         setResistance(5.0F);
@@ -50,21 +47,9 @@ public class SolarPanelBlock extends BaseModBlockWithTileEntity {
         return ModConfiguration.isSolarPanelFullBlock() && super.isOpaqueCube();
     }
 
-    public int getMaximumEnergyGeneration() {
-        return mMaximumEnergyGeneration;
-    }
-
-    public int getMaximumEnergyTransfer() {
-        return mMaximumEnergyTransfer;
-    }
-
-    public int getEnergyCapacity() {
-        return mEnergyCapacity;
-    }
-
     @Override
     public TileEntity createNewTileEntity(World pWorld, int pMetadata) {
-        return new SolarPanelTileEntity(mMaximumEnergyGeneration, mMaximumEnergyTransfer, mEnergyCapacity);
+        return new SolarPanelTileEntity(mTierIndex);
     }
 
     @Override
@@ -77,36 +62,48 @@ public class SolarPanelBlock extends BaseModBlockWithTileEntity {
 
     @Override
     public void onBlockPlacedBy(World pWorld, int pX, int pY, int pZ, EntityLivingBase pEntity, ItemStack pItemStack) {
-        // When the solar panel is placed, we restore its energy from the Item.
-        if (pItemStack.stackTagCompound != null) {
-            SolarPanelTileEntity localTileCell = (SolarPanelTileEntity) pWorld.getTileEntity(pX, pY, pZ);
-            localTileCell.setEnergyStored(pItemStack.stackTagCompound.getInteger(StatefulEnergyStorage.NBT_ENERGY));
-        }
         super.onBlockPlacedBy(pWorld, pX, pY, pZ, pEntity, pItemStack);
+        // When the solar panel is placed, we restore its energy from the Item.
+        if (pItemStack.getTagCompound() != null) {
+            // TODO Consider moving this logic to the Tile Entity class. (could prevent exposing internals of the tile entity) (e.g. readFromItemStack/writeToItemStack)
+            SolarPanelTileEntity localTileCell = (SolarPanelTileEntity) pWorld.getTileEntity(pX, pY, pZ);
+            localTileCell.getInventory().readFromNBT(pItemStack.getTagCompound());
+            // Force update to refresh the upgrade cache before restoring the energy.
+            localTileCell.markDirty();
+            localTileCell.setEnergyStored(pItemStack.getTagCompound().getInteger(NBTConstants.ENERGY));
+        }
     }
 
     @Override
     public boolean onBlockActivated(World pWorld, int pX, int pY, int pZ, EntityPlayer pPlayer, int pSide, float pdx, float pdy, float pdz) {
-        if (Utils.isServer(pWorld) && pPlayer.isSneaking()) {
-            if (Utils.hasUsableWrench(pPlayer, pX, pY, pZ)) {
-                dismantleBlock(pWorld, pX, pY, pZ);
-                return true;
+        if (Utils.isServer(pWorld)) {
+            if (pPlayer.isSneaking()) {
+                if (Utils.hasUsableWrench(pPlayer, pX, pY, pZ)) {
+                    dismantleBlock(pWorld, pX, pY, pZ);
+                    return true;
+                }
+                if (ModConfiguration.infoOnSneakClick()) {
+                    displayChatInformation(pWorld, pX, pY, pZ, pPlayer);
+                }
+            } else {
+                if (pWorld.getTileEntity(pX, pY, pZ) instanceof SolarPanelTileEntity) {
+                    pPlayer.openGui(SolarFluxMod.mInstance, 0, pWorld, pX, pY, pZ);
+                }
             }
-            displayChatInformation(pWorld, pX, pY, pZ, pPlayer);
-            return true;
         }
-        return false;
+        return true;
     }
 
     private void displayChatInformation(World pWorld, int pX, int pY, int pZ, EntityPlayer pPlayer) {
         SolarPanelTileEntity tile = (SolarPanelTileEntity) pWorld.getTileEntity(pX, pY, pZ);
-        String message = String.format("%s: [%d%%] %,d / %,d %s: %,d",
+        String message = String.format(
+                "%s: [%d%%] %,d / %,d %s: %,d",
                 Lang.localise("energy.stored"),
                 tile.getPercentageEnergyStored(),
                 tile.getEnergyStored(),
                 tile.getMaxEnergyStored(),
                 Lang.localise("energy.generation"),
-                tile.getEnergyProduced());
+                tile.getCurrentEnergyGeneration());
         pPlayer.addChatMessage(new ChatComponentText(message));
     }
 
@@ -115,6 +112,7 @@ public class SolarPanelBlock extends BaseModBlockWithTileEntity {
      * Used when wrenched.
      */
     private void dismantleBlock(World pWorld, int pX, int pY, int pZ) {
+        // TODO Consider moving this logic to the Tile Entity class. (could prevent exposing internals of the tile entity) (e.g. readFromItemStack/writeToItemStack)
         ItemStack itemStack = new ItemStack(this);
 
         // Store the energy in the ItemStack (from the TileEntity)
@@ -125,9 +123,29 @@ public class SolarPanelBlock extends BaseModBlockWithTileEntity {
                 if (itemStack.getTagCompound() == null) {
                     itemStack.setTagCompound(new NBTTagCompound());
                 }
-                itemStack.getTagCompound().setInteger(StatefulEnergyStorage.NBT_ENERGY, internalEnergy);
+                itemStack.getTagCompound().setInteger(NBTConstants.ENERGY, internalEnergy);
             }
-            SolarFluxMod.log.trace("Dismantled solar panel with %,d RF.", internalEnergy);
+        }
+
+        // Store the inventory in the ItemStack (from the TileEntity)
+        if (ModConfiguration.doesKeepInventoryWhenDismantled()) {
+            SolarPanelTileEntity localTileCell = (SolarPanelTileEntity) pWorld.getTileEntity(pX, pY, pZ);
+            int upgradeInstalled = localTileCell.getTotalUpgradeInstalled();
+
+            if (upgradeInstalled > 0) {
+                if (itemStack.getTagCompound() == null) {
+                    itemStack.setTagCompound(new NBTTagCompound());
+                }
+                localTileCell.getInventory().writeToNBT(itemStack.getTagCompound());
+
+                // Adding info for tooltip.
+                itemStack.getTagCompound().setInteger(NBTConstants.TOOLTIP_UPGRADE_COUNT, upgradeInstalled);
+                itemStack.getTagCompound().setInteger(NBTConstants.TOOLTIP_CAPACITY, localTileCell.getEnergyStorage().getMaxEnergyStored());
+                itemStack.getTagCompound().setInteger(NBTConstants.TOOLTIP_TRANSFER_RATE, localTileCell.getEnergyStorage().getMaxTransferExtract());
+
+                // We remove the tile entity to avoid having the inventory content dropped into the world.
+                pWorld.removeTileEntity(pX, pY, pZ);
+            }
         }
 
         pWorld.setBlockToAir(pX, pY, pZ);
@@ -137,6 +155,10 @@ public class SolarPanelBlock extends BaseModBlockWithTileEntity {
     @Override
     public void registerBlockIcons(IIconRegister pIconRegister) {
         super.registerBlockIcons(pIconRegister);
-        mBlockSideIcon = pIconRegister.registerIcon(this.getTextureName() + "_side");
+        mBlockSideIcon = pIconRegister.registerIcon(getTextureName() + "_side");
+    }
+
+    public int getTierIndex() {
+        return mTierIndex;
     }
 }

@@ -1,18 +1,13 @@
 package com.nauktis.solarflux.blocks;
 
-import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
 import cofh.api.energy.IEnergyStorage;
 import com.google.common.base.Objects;
+import com.nauktis.solarflux.reference.NBTConstants;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class StatefulEnergyStorage implements IEnergyStorage {
-    public static final String NBT_ENERGY = "SFESEnergy";
-    protected static final String NBT_CAPACITY = "SFESCapacity";
-    protected static final String NBT_MAX_TRANSFER_RECEIVE = "SFESMaxTransferReceive";
-    protected static final String NBT_MAX_TRANSFER_EXTRACT = "SFESMaxTransferExtract";
-
     protected int mEnergy;
     protected int mCapacity;
     protected int mMaxTransferReceive;
@@ -33,17 +28,11 @@ public class StatefulEnergyStorage implements IEnergyStorage {
     }
 
     public void readFromNBT(NBTTagCompound pNbt) {
-        setMaxEnergyStored(pNbt.getInteger(NBT_CAPACITY));
-        setEnergyStored(pNbt.getInteger(NBT_ENERGY));
-        setMaxTransferReceive(pNbt.getInteger(NBT_MAX_TRANSFER_RECEIVE));
-        setMaxTransferExtract(pNbt.getInteger(NBT_MAX_TRANSFER_EXTRACT));
+        setEnergyStored(pNbt.getInteger(NBTConstants.ENERGY));
     }
 
     public void writeToNBT(NBTTagCompound pNbt) {
-        pNbt.setInteger(NBT_CAPACITY, getMaxEnergyStored());
-        pNbt.setInteger(NBT_ENERGY, getEnergyStored());
-        pNbt.setInteger(NBT_MAX_TRANSFER_RECEIVE, getMaxTransferReceive());
-        pNbt.setInteger(NBT_MAX_TRANSFER_EXTRACT, getMaxTransferExtract());
+        pNbt.setInteger(NBTConstants.ENERGY, getEnergyStored());
     }
 
     /**
@@ -165,10 +154,10 @@ public class StatefulEnergyStorage implements IEnergyStorage {
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
-                      .add("energy", getEnergyStored())
-                      .add("capacity", getMaxEnergyStored())
-                      .add("maxTransferReceive", getMaxTransferReceive())
-                      .add("maxTransferExtract", getMaxTransferExtract())
-                      .toString();
+                .add("energy", getEnergyStored())
+                .add("capacity", getMaxEnergyStored())
+                .add("maxTransferReceive", getMaxTransferReceive())
+                .add("maxTransferExtract", getMaxTransferExtract())
+                .toString();
     }
 }
