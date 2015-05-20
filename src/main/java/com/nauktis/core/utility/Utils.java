@@ -4,10 +4,16 @@ import buildcraft.api.tools.IToolWrench;
 import cpw.mods.fml.common.ModAPIManager;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import org.lwjgl.input.Keyboard;
+
+import java.util.Random;
 
 public final class Utils {
+    public static final Random RANDOM = new Random();
+
     /**
      * Utility class, no public constructor.
      */
@@ -51,5 +57,37 @@ public final class Utils {
         entityItem.motionX = 0;
         entityItem.motionZ = 0;
         pWorld.spawnEntityInWorld(entityItem);
+    }
+
+    /**
+     * Returns true if the two ItemStacks contains exactly the same item without taking stack size into account.
+     * Credit to Pahimar.
+     */
+    public static boolean itemStacksEqualIgnoreStackSize(ItemStack pItemStack1, ItemStack pItemStack2) {
+        if (pItemStack1 != null && pItemStack2 != null) {
+            // Compare itemID
+            if (Item.getIdFromItem(pItemStack1.getItem()) - Item.getIdFromItem(pItemStack2.getItem()) == 0) {
+                // Compare item
+                if (pItemStack1.getItem() == pItemStack2.getItem()) {
+                    // Compare meta
+                    if (pItemStack1.getItemDamage() == pItemStack2.getItemDamage()) {
+                        // Compare NBT presence
+                        if (pItemStack1.hasTagCompound() && pItemStack2.hasTagCompound()) {
+                            // Compare NBT
+                            if (ItemStack.areItemStackTagsEqual(pItemStack1, pItemStack2)) {
+                                return true;
+                            }
+                        } else if (!pItemStack1.hasTagCompound() && !pItemStack2.hasTagCompound()) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean isShiftKeyDown() {
+        return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
 }
