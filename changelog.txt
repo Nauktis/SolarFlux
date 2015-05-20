@@ -1,0 +1,111 @@
+--------------------------------------------------------------------------------
+Version 0.6b
+--------------------------------------------------------------------------------
+Changes
+- IDs for solar panels start again at 1 instead of 0. (This will prevent migration issues from version 0.5x)
+
+Bugs
+- Fixed Container sync issue between client and server.
+
+--------------------------------------------------------------------------------
+Version 0.6a
+--------------------------------------------------------------------------------
+Bugs
+- Removed logging statements that were polluting the logs.
+
+--------------------------------------------------------------------------------
+Version 0.6
+--------------------------------------------------------------------------------
+New
+- There is now a GUI showing you various information about your solar panels.
+- Upgrades. Solar panels can now be upgraded with various upgrades.
+    - Efficiency upgrade will increase the efficiency of your solar panels and make them produce more RF/tick.
+    - Low light upgrade will allow you solar panels to generate energy in low light environment (at night) but will be less efficient when the sun is too bright.
+    - Machine traversal upgrade will allow your solar panels to send energy to connected machines without the need for cables. As long as the machines are touching each other they will receive energy. 10 pulverizers in a straight line? No problem!
+    - Transfer rate upgrade increases the amount of RF that the solar panel can transfer per tick.
+    - Capacity upgrade increases the size of the solar panel's internal storage.
+- When dismantling a solar panel with a wrench. It will keep its installed upgrade in addition to its stored energy.
+- Config: Tons of new configuration.
+ - Each upgrade can be disabled in the config (it will not appear in game).
+ - The effect of each upgrade can be tweaked in the config.
+ - The production/transfer rate and capacity of each tier of solar panel can be tweaked in the config.
+ - The number of tier is configurable! You only want two tiers? You absolutely need 89 tiers? No problem, I got you covered.
+- Big refactoring of the internals of the mod.
+
+Changes
+- Changed some recipes.
+
+Bugs
+- Fix: Solar Panels will evenly distribute energy to all adjacent machines. They used to do it only if they had enough energy.
+
+--------------------------------------------------------------------------------
+Version 0.5b
+--------------------------------------------------------------------------------
+Bugs
+- Fix: RedstoneFlux API. Should now charge machines.
+
+--------------------------------------------------------------------------------
+Version 0.5a
+--------------------------------------------------------------------------------
+Bugs
+- Fix: APIs managed to get shipped with version 0.5.
+
+--------------------------------------------------------------------------------
+Version 0.5
+--------------------------------------------------------------------------------
+New
+- Solar panel can now be dismantled with a wrench. They will keep their energy.
+- Break the solar panel with a pickaxe to drop the energy and make it stack again.
+- New localization for the info and tooltips.
+- Config: Whether or not solar panels should keep their energy when dismantled with a wrench.
+- Config: Factor to reduce the production of energy during rainy weather.
+- Config: Factor to reduce the production of energy during stormy weather.
+
+--------------------------------------------------------------------------------
+Version 0.4d
+--------------------------------------------------------------------------------
+New
+- Updated the Redstone Flux API
+
+--------------------------------------------------------------------------------
+Version 0.4
+--------------------------------------------------------------------------------
+New
+- New recipes (using Thermal Expansion)
+- Auto-detection of Thermal Expansion and fallback on vanilla recipes when missing.
+- Option to toggle Thermal Expansion recipes.
+- Cleaning here and there
+
+--------------------------------------------------------------------------------
+Version 0.3
+--------------------------------------------------------------------------------
+New
+- Adjacent solar panels will automatically balance their energy (no cables needed).
+- Auto balance of energy can be turned off in config.
+
+Changes
+- Increased the max amount of energy transferred per tick.
+
+Bugs
+- Fixed a int overflow when displaying energy in chat.
+
+--------------------------------------------------------------------------------
+Version 0.2b
+--------------------------------------------------------------------------------
+Bugs
+- Fixed missing recipes
+
+--------------------------------------------------------------------------------
+Version 0.2
+--------------------------------------------------------------------------------
+New
+- Height of the block can be customised in the config file.
+- Config can be edited from main menu (restart of Minecraft required).
+
+Changes
+- Got rid of the "ugly" textures.
+
+--------------------------------------------------------------------------------
+Version 0.1
+--------------------------------------------------------------------------------
+- First public release
