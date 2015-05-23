@@ -22,6 +22,7 @@ public class ModItems {
     public static Item mUpgradeTraversal;
     public static Item mUpgradeTransferRate;
     public static Item mUpgradeCapacity;
+    public static Item mUpgradeFurnace;
 
     private ModItems() {
     }
@@ -72,6 +73,12 @@ public class ModItems {
             GameRegistry.registerItem(mUpgradeCapacity, "upgradeCapacity");
             anyUpgrade = true;
         }
+        if (ModConfiguration.isFurnaceUpgradeActive()) {
+            mUpgradeFurnace = new UpgradeItem("upgradeFurnace", 1, Lang.localise("upgrade.furnace"));
+            GameRegistry.registerItem(mUpgradeFurnace, "upgradeFurnace");
+            anyUpgrade = true;
+        }
+
         if (anyUpgrade) {
             mUpgradeBlank = new CraftingItem("upgradeBlank");
             GameRegistry.registerItem(mUpgradeBlank, "upgradeBlank");

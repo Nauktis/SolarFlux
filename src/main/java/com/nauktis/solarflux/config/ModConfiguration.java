@@ -51,6 +51,7 @@ public class ModConfiguration {
     private static float mCapacityUpgradeIncrease;
     private static float mCapacityUpgradeReturnsToScale;
     private static int mCapacityUpgradeMax;
+    private static boolean mFurnaceUpgradeActive;
 
     public static void initialize(File pConfigFile) {
         SolarFluxMod.log.info("Initialization of configuration");
@@ -149,6 +150,10 @@ public class ModConfiguration {
         mCapacityUpgradeIncrease = mConfiguration.getFloat("CapacityUpgradeIncrease", UPGRADE_CATEGORY, 0.1F, 0.01F, 10, "Factor by which the capacity is increased per upgrade.");
         mCapacityUpgradeReturnsToScale = mConfiguration.getFloat("CapacityUpgradeReturnsToScale", UPGRADE_CATEGORY, 1, 0.1F, 2, "Returns to scale. How does the transfer rate scales as you add more upgrades. 1 is linear. Below 1 reduces the efficiency as you add upgrades, Above 1 does the opposite.");
         mCapacityUpgradeMax = mConfiguration.getInt("CapacityUpgradeMax", UPGRADE_CATEGORY, 16, 1, 256, "Maximum number of capacity upgrade that can be added to a single solar panel.");
+
+        // Furnace upgrade
+        mFurnaceUpgradeActive = mConfiguration.getBoolean("FurnaceUpgradeActive", UPGRADE_CATEGORY, true, "Whether or not furnace upgrades should be added to the game.");
+
         //@formatter:on
     }
 
@@ -329,6 +334,10 @@ public class ModConfiguration {
 
     public static float getCapacityUpgradeReturnsToScale() {
         return mCapacityUpgradeReturnsToScale;
+    }
+
+    public static boolean isFurnaceUpgradeActive() {
+        return mFurnaceUpgradeActive;
     }
 
     @SubscribeEvent

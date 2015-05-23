@@ -70,6 +70,9 @@ public class VanillaRecipeRegistrar extends AbstractRecipeRegistrar {
         if (ModItems.mUpgradeCapacity != null) {
             registerUpgradeCapacity();
         }
+        if (ModItems.mUpgradeFurnace != null) {
+            registerUpgradeFurnace();
+        }
     }
 
     protected void registerMirrorRecipe() {
@@ -236,5 +239,9 @@ public class VanillaRecipeRegistrar extends AbstractRecipeRegistrar {
 
     protected void registerUpgradeCapacity() {
         GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.mUpgradeCapacity, " r ", "rur", "rcr", 'r', "dustRedstone", 'u', ModItems.mUpgradeBlank, 'c', "blockRedstone"));
+    }
+
+    protected void registerUpgradeFurnace() {
+        GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.mUpgradeFurnace, "ccc", "cuc", "cfc", 'c', Items.coal, 'u', ModItems.mUpgradeBlank, 'f', Blocks.furnace));
     }
 }
