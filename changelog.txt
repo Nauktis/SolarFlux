@@ -1,4 +1,17 @@
 --------------------------------------------------------------------------------
+Version 0.7
+--------------------------------------------------------------------------------
+New
+- Furnace upgrade. Heat vanilla furnaces with the sun.
+
+Changes
+- Changed the calculation behind the Low Light Upgrade.
+
+Bugs
+- Fix: Solar Panels will evenly distribute energy to all adjacent machines. They used to do it only if they had enough energy.
+- Fix: Low Light upgrades no longer allow to generate energy inside.
+
+--------------------------------------------------------------------------------
 Version 0.6b
 --------------------------------------------------------------------------------
 Changes
