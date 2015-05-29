@@ -7,7 +7,6 @@ import com.google.common.collect.Range;
 import com.nauktis.core.inventory.BaseInventory;
 import com.nauktis.core.tileentity.BaseModTileEntitySynced;
 import com.nauktis.core.utility.Utils;
-import com.nauktis.solarflux.SolarFluxMod;
 import com.nauktis.solarflux.blocks.modules.EnergySharingModule;
 import com.nauktis.solarflux.blocks.modules.ITileEntityModule;
 import com.nauktis.solarflux.blocks.modules.SimpleEnergyDispenserModule;
@@ -128,12 +127,6 @@ public class SolarPanelTileEntity extends BaseModTileEntitySynced implements IIn
         computeSunIntensity();
 
         double energyGeneration = getMaximumEnergyGeneration() * mSunIntensity;
-        if (getUpgradeCount(ModItems.mUpgradeLowLight) > 0) {
-            energyGeneration += getMaximumEnergyGeneration() * (-1.1 * mSunIntensity + 0.45 + 0.05 * Math.pow(
-                    getUpgradeCount(ModItems.mUpgradeLowLight),
-                    0.8));
-        }
-
         energyGeneration *= (1 + ModConfiguration.getEfficiencyUpgradeIncrease() * Math.pow(
                 getUpgradeCount(ModItems.mUpgradeEfficiency),
                 ModConfiguration.getEfficiencyUpgradeReturnsToScale()));
@@ -153,13 +146,13 @@ public class SolarPanelTileEntity extends BaseModTileEntitySynced implements IIn
     }
 
     /**
-     * Compute the intensity of the sun.
+     * Compute the intensity of the sun that can be used by the Solar Panel.
      */
     private void computeSunIntensity() {
         if (worldObj.canBlockSeeTheSky(xCoord, yCoord + 1, zCoord)) {
             // Intensity based on the position of the sun.
-            float multiplicator = 1.5f;
-            float displacement = 1.2f;
+            float multiplicator = 1.5f - (getUpgradeCount(ModItems.mUpgradeLowLight) * 0.122f);
+            float displacement = 1.2f + (getUpgradeCount(ModItems.mUpgradeLowLight) * 0.08f);
             // Celestial angle == 0 at zenith.
             float celestialAngleRadians = worldObj.getCelestialAngleRadians(1.0f);
             if (celestialAngleRadians > Math.PI) {
@@ -250,9 +243,11 @@ public class SolarPanelTileEntity extends BaseModTileEntitySynced implements IIn
     }
 
     public int getUpgradeCount(Item pItem) {
-        // TODO return Math.min count and max allowed
-        Integer count = mUpgradeCache.get(pItem);
-        return count == null ? 0 : count;
+        if (pItem != null) {
+            Integer count = mUpgradeCache.get(pItem);
+            return count == null ? 0 : count;
+        }
+        return 0;
     }
 
     @Override
@@ -283,7 +278,7 @@ public class SolarPanelTileEntity extends BaseModTileEntitySynced implements IIn
     /**
      * Returns true if this tick is a good one to perform an operation that is desired to run ar the provided rate.
      */
-    private boolean atTickRate(int pDesiredTickRate) {
+    public boolean atTickRate(int pDesiredTickRate) {
         return (getWorldObj().getTotalWorldTime() + mTickShift) % pDesiredTickRate == 0;
     }
 
