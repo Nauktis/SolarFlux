@@ -52,6 +52,7 @@ public class ModConfiguration {
     private static float mCapacityUpgradeReturnsToScale;
     private static int mCapacityUpgradeMax;
     private static boolean mFurnaceUpgradeActive;
+    private static int mFurnaceUpgradeHeatingConsumption;
 
     public static void initialize(File pConfigFile) {
         SolarFluxMod.log.info("Initialization of configuration");
@@ -153,6 +154,7 @@ public class ModConfiguration {
 
         // Furnace upgrade
         mFurnaceUpgradeActive = mConfiguration.getBoolean("FurnaceUpgradeActive", UPGRADE_CATEGORY, true, "Whether or not furnace upgrades should be added to the game.");
+        mFurnaceUpgradeHeatingConsumption = mConfiguration.getInt("FurnaceUpgradeHeatingConsumption", UPGRADE_CATEGORY, 8, 1, 64000, "Amount of RF per tick used to heat up a furnace.");
 
         //@formatter:on
     }
@@ -338,6 +340,10 @@ public class ModConfiguration {
 
     public static boolean isFurnaceUpgradeActive() {
         return mFurnaceUpgradeActive;
+    }
+
+    public static int getFurnaceUpgradeHeatingConsumption() {
+        return mFurnaceUpgradeHeatingConsumption;
     }
 
     @SubscribeEvent
