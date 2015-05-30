@@ -1,5 +1,6 @@
 package com.nauktis.solarflux.init;
 
+import com.google.common.collect.Lists;
 import com.nauktis.solarflux.SolarFluxMod;
 import com.nauktis.solarflux.config.ModConfiguration;
 import com.nauktis.solarflux.items.CraftingItem;
@@ -7,6 +8,8 @@ import com.nauktis.solarflux.items.UpgradeItem;
 import com.nauktis.solarflux.utility.Lang;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
+
+import java.util.List;
 
 public class ModItems {
     public static final Item mMirror = new CraftingItem("mirror");
@@ -37,15 +40,15 @@ public class ModItems {
 
         boolean anyUpgrade = false;
         if (ModConfiguration.isEfficiencyUpgradeActive()) {
-            String info = String.format(Lang.localise("upgrade.efficiency"), ModConfiguration.getEfficiencyUpgradeIncrease() * 100);
-            info += "\n" + localiseReturnsToScale(ModConfiguration.getEfficiencyUpgradeReturnsToScale());
-
-            mUpgradeEfficiency = new UpgradeItem("upgradeEfficiency", ModConfiguration.getEfficiencyUpgradeMax(), info);
+            List<String> infos = Lists.newArrayList();
+            infos.add(String.format(Lang.localise("upgrade.efficiency"), ModConfiguration.getEfficiencyUpgradeIncrease() * 100));
+            infos.add(localiseReturnsToScale(ModConfiguration.getEfficiencyUpgradeReturnsToScale()));
+            mUpgradeEfficiency = new UpgradeItem("upgradeEfficiency", ModConfiguration.getEfficiencyUpgradeMax(), infos);
             GameRegistry.registerItem(mUpgradeEfficiency, "upgradeEfficiency");
             anyUpgrade = true;
         }
         if (ModConfiguration.isLowLightUpgradeActive()) {
-            mUpgradeLowLight = new UpgradeItem("upgradeLowLight", ModConfiguration.getLowLightUpgradeMax(), Lang.localise("upgrade.low.light"));
+            mUpgradeLowLight = new UpgradeItem("upgradeLowLight", ModConfiguration.getLowLightUpgradeMax(), Lists.newArrayList(Lang.localise("upgrade.low.light")));
             GameRegistry.registerItem(mUpgradeLowLight, "upgradeLowLight");
             anyUpgrade = true;
         }
@@ -53,28 +56,28 @@ public class ModItems {
             mUpgradeTraversal = new UpgradeItem(
                     "upgradeTraversal",
                     ModConfiguration.getTraversalUpgradeMax(),
-                    String.format(Lang.localise("upgrade.traversal"), ModConfiguration.getTraversalUpgradeIncrease()));
+                    Lists.newArrayList(String.format(Lang.localise("upgrade.traversal"), ModConfiguration.getTraversalUpgradeIncrease())));
             GameRegistry.registerItem(mUpgradeTraversal, "upgradeTraversal");
             anyUpgrade = true;
         }
         if (ModConfiguration.isTransferRateUpgradeActive()) {
-            String info = String.format(Lang.localise("upgrade.transfer"), ModConfiguration.getTransferRateUpgradeIncrease() * 100);
-            info += "\n" + localiseReturnsToScale(ModConfiguration.getTransferRateUpgradeReturnsToScale());
-
-            mUpgradeTransferRate = new UpgradeItem("upgradeTransferRate", ModConfiguration.getTransferRateUpgradeMax(), info);
+            List<String> infos = Lists.newArrayList();
+            infos.add(String.format(Lang.localise("upgrade.transfer"), ModConfiguration.getTransferRateUpgradeIncrease() * 100));
+            infos.add(localiseReturnsToScale(ModConfiguration.getTransferRateUpgradeReturnsToScale()));
+            mUpgradeTransferRate = new UpgradeItem("upgradeTransferRate", ModConfiguration.getTransferRateUpgradeMax(), infos);
             GameRegistry.registerItem(mUpgradeTransferRate, "upgradeTransferRate");
             anyUpgrade = true;
         }
         if (ModConfiguration.isCapacityUpgradeActive()) {
-            String info = String.format(Lang.localise("upgrade.capacity"), ModConfiguration.getCapacityUpgradeIncrease() * 100);
-            info += "\n" + localiseReturnsToScale(ModConfiguration.getCapacityUpgradeReturnsToScale());
-
-            mUpgradeCapacity = new UpgradeItem("upgradeCapacity", ModConfiguration.getCapacityUpgradeMax(), info);
+            List<String> infos = Lists.newArrayList();
+            infos.add(String.format(Lang.localise("upgrade.capacity"), ModConfiguration.getCapacityUpgradeIncrease() * 100));
+            infos.add(localiseReturnsToScale(ModConfiguration.getCapacityUpgradeReturnsToScale()));
+            mUpgradeCapacity = new UpgradeItem("upgradeCapacity", ModConfiguration.getCapacityUpgradeMax(), infos);
             GameRegistry.registerItem(mUpgradeCapacity, "upgradeCapacity");
             anyUpgrade = true;
         }
         if (ModConfiguration.isFurnaceUpgradeActive()) {
-            mUpgradeFurnace = new UpgradeItem("upgradeFurnace", 1, Lang.localise("upgrade.furnace"));
+            mUpgradeFurnace = new UpgradeItem("upgradeFurnace", 1, Lists.newArrayList(Lang.localise("upgrade.furnace")));
             GameRegistry.registerItem(mUpgradeFurnace, "upgradeFurnace");
             anyUpgrade = true;
         }

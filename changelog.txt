@@ -10,6 +10,7 @@ Changes
 Bugs
 - Fix: Solar Panels will evenly distribute energy to all adjacent machines. They used to do it only if they had enough energy.
 - Fix: Low Light upgrades no longer allow to generate energy inside.
+- Fix: Tooltips now render properly when holding Shift.
 
 --------------------------------------------------------------------------------
 Version 0.6b
