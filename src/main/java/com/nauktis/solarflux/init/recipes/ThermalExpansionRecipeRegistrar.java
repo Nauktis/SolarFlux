@@ -63,7 +63,7 @@ public class ThermalExpansionRecipeRegistrar extends VanillaRecipeRegistrar {
     protected void registerSolarPanel2() {
         try {
             ItemStack frameMachineBasic = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "frameMachineBasic", 1));
-            ItemStack cellBasic = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "cellBasic", 1));
+            ItemStack cellBasic = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "frameCellBasic", 1));
             GameRegistry.addRecipe(
                     new ShapedOreRecipe(
                             ModBlocks.getSolarPanels().get(2),
@@ -89,7 +89,7 @@ public class ThermalExpansionRecipeRegistrar extends VanillaRecipeRegistrar {
     protected void registerSolarPanel3() {
         try {
             ItemStack frameMachineHardened = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "frameMachineHardened", 1));
-            ItemStack cellHardened = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "cellHardened", 1));
+            ItemStack cellHardened = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "frameCellHardened", 1));
             GameRegistry.addRecipe(
                     new ShapedOreRecipe(
                             ModBlocks.getSolarPanels().get(3),
@@ -115,7 +115,7 @@ public class ThermalExpansionRecipeRegistrar extends VanillaRecipeRegistrar {
     protected void registerSolarPanel4() {
         try {
             ItemStack frameMachineReinforced = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "frameMachineReinforced", 1));
-            ItemStack cellReinforced = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "cellReinforced", 1));
+            ItemStack cellReinforced = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "frameCellReinforcedFull", 1));
             GameRegistry.addRecipe(
                     new ShapedOreRecipe(
                             ModBlocks.getSolarPanels().get(4),
@@ -141,7 +141,7 @@ public class ThermalExpansionRecipeRegistrar extends VanillaRecipeRegistrar {
     protected void registerSolarPanel5() {
         try {
             ItemStack frameMachineResonant = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "frameMachineResonant", 1));
-            ItemStack cellResonant = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "cellResonant", 1));
+            ItemStack cellResonant = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "frameCellResonantFull", 1));
             GameRegistry.addRecipe(
                     new ShapedOreRecipe(
                             ModBlocks.getSolarPanels().get(5),
@@ -167,7 +167,7 @@ public class ThermalExpansionRecipeRegistrar extends VanillaRecipeRegistrar {
     protected void registerSolarPanel(int pTier) {
         try {
             ItemStack powerCoilElectrum = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "powerCoilElectrum", 1));
-            ItemStack cellResonant = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "cellResonant", 1));
+            ItemStack cellResonant = Preconditions.checkNotNull(GameRegistry.findItemStack(Reference.THERMAL_EXPANSION_MOD_ID, "frameCellResonantFull", 1));
             GameRegistry.addRecipe(
                     new ShapedOreRecipe(
                             ModBlocks.getSolarPanels().get(pTier),

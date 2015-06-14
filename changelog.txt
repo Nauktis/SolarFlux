@@ -4,6 +4,9 @@ Version 0.8
 New
 - Connected textures for the Solar Panels. (on/off in config)
 
+Changes
+- Changed some recipes: Energy cell frames instead of Energy cells.
+
 --------------------------------------------------------------------------------
 Version 0.7
 --------------------------------------------------------------------------------
