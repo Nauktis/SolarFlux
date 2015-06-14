@@ -1,6 +1,7 @@
 package com.nauktis.solarflux.blocks;
 
 import com.nauktis.core.block.BaseModBlockWithTileEntity;
+import com.nauktis.core.block.icon.IBlockIconHandler;
 import com.nauktis.core.utility.Utils;
 import com.nauktis.solarflux.SolarFluxMod;
 import com.nauktis.solarflux.config.ModConfiguration;
@@ -8,6 +9,7 @@ import com.nauktis.solarflux.creativetab.ModCreativeTab;
 import com.nauktis.solarflux.reference.NBTConstants;
 import com.nauktis.solarflux.reference.Reference;
 import com.nauktis.solarflux.utility.Lang;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -23,8 +26,8 @@ public class SolarPanelBlock extends BaseModBlockWithTileEntity {
     private final int mTierIndex;
     private IIcon mBlockSideIcon;
 
-    public SolarPanelBlock(String pName, int pTierIndex) {
-        super(Reference.MOD_ID, pName);
+    public SolarPanelBlock(String pName, IBlockIconHandler pBlockIconHandler, int pTierIndex) {
+        super(Reference.MOD_ID, pName, pBlockIconHandler);
         mTierIndex = pTierIndex;
         setCreativeTab(ModCreativeTab.MOD_TAB);
         setHardness(3.0F);
@@ -50,14 +53,6 @@ public class SolarPanelBlock extends BaseModBlockWithTileEntity {
     @Override
     public TileEntity createNewTileEntity(World pWorld, int pMetadata) {
         return new SolarPanelTileEntity(mTierIndex);
-    }
-
-    @Override
-    public IIcon getIcon(int pSide, int pMetadata) {
-        if (ForgeDirection.UP == ForgeDirection.getOrientation(pSide)) {
-            return super.getIcon(pSide, pMetadata);
-        }
-        return mBlockSideIcon;
     }
 
     @Override
@@ -150,12 +145,6 @@ public class SolarPanelBlock extends BaseModBlockWithTileEntity {
 
         pWorld.setBlockToAir(pX, pY, pZ);
         Utils.spawnItemStack(pWorld, pX, pY, pZ, itemStack);
-    }
-
-    @Override
-    public void registerBlockIcons(IIconRegister pIconRegister) {
-        super.registerBlockIcons(pIconRegister);
-        mBlockSideIcon = pIconRegister.registerIcon(getTextureName() + "_side");
     }
 
     public int getTierIndex() {

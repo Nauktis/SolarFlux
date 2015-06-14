@@ -53,6 +53,7 @@ public class ModConfiguration {
     private static int mCapacityUpgradeMax;
     private static boolean mFurnaceUpgradeActive;
     private static int mFurnaceUpgradeHeatingConsumption;
+    private static boolean mConnectedTextures;
 
     public static void initialize(File pConfigFile) {
         SolarFluxMod.log.info("Initialization of configuration");
@@ -111,6 +112,11 @@ public class ModConfiguration {
                 Configuration.CATEGORY_GENERAL,
                 false,
                 "Display Solar Panel information on right click while sneaking.");
+        mConnectedTextures = mConfiguration.getBoolean(
+                "ConnectedTextures",
+                Configuration.CATEGORY_GENERAL,
+                true,
+                "Use connected textures for the solar panels.");
 
         loadTierConfigurations();
         loadUpgradesConfiguration();
@@ -344,6 +350,10 @@ public class ModConfiguration {
 
     public static int getFurnaceUpgradeHeatingConsumption() {
         return mFurnaceUpgradeHeatingConsumption;
+    }
+
+    public static boolean useConnectedTextures() {
+        return mConnectedTextures;
     }
 
     @SubscribeEvent
