@@ -29,7 +29,7 @@ public class ModBlocks {
 
             // Texture
             // We need to reuse the highest texture we have available if tier is too high.
-            int textureTierIndex = Math.min(tierIndex, ModConfiguration.DEFAULT_TIER_CONFIGURATIONS.size());
+            int textureTierIndex = Math.min(tierIndex, ModConfiguration.DEFAULT_TIER_CONFIGURATIONS.size() - 1);
             IBlockIconHandler topHandler = new SingleIconHandler(Reference.MOD_ID, "solar" + textureTierIndex + "_0");
 
             if (ModConfiguration.useConnectedTextures()) {
