@@ -69,7 +69,7 @@ public class ModConfiguration {
         mSolarPanelHeight = mConfiguration.getFloat(
                 "SolarPanelHeight",
                 Configuration.CATEGORY_GENERAL,
-                0.375F,
+                0.01F,
                 0.1F,
                 1,
                 "The height of the Solar Panel blocks.");
